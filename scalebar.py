@@ -20,9 +20,6 @@ def read_mrc(path_to_mrc):
         print(f"{path_to_mrc} is not a regular file. Skipping.")
         return None
     try:
-        if mrcfile.validate(path_to_mrc) is False:
-            print(f"mrcfile could not validate {path_to_mrc}. Skipping.")
-            return None
         with mrcfile.open(path_to_mrc) as mrc:
             img = mrc.data
             # get pixel sizes and convert to meters
