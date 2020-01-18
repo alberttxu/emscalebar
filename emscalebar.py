@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 import argparse
 import logging
 import os
+import tempfile
 import traceback
 
 from PIL import Image
@@ -47,15 +49,16 @@ def make_jpg_with_scalebar(img, pixel_size, outputdir, outputname):
     img = img_as_ubyte(img)
 
     plt.figure()
-    scalebar = ScaleBar(pixel_size, location="lower right", box_alpha=0)
+    scalebar = ScaleBar(pixel_size, location="lower right", color="blue", frameon=False)
     plt.gca().add_artist(scalebar)
     plt.imshow(img, cmap="gray")
     plt.axis("off")
-    temp_img = os.path.join(outputdir, "temp_emscalebar.png")
+    temp_img = tempfile.TemporaryFile()
     plt.savefig(temp_img, bbox_inches="tight", pad_inches=0, dpi=300)
     print(f"creating jpg image {os.path.join(outputdir, outputname)}")
-    Image.open(temp_img).convert("L").save(os.path.join(outputdir, outputname), "JPEG")
-    os.remove(temp_img)
+    Image.open(temp_img).convert("RGB").save(
+        os.path.join(outputdir, outputname), "JPEG"
+    )
 
 
 if __name__ == "__main__":
