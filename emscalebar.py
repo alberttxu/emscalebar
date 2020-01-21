@@ -36,7 +36,7 @@ def read_mrc(path_to_mrc):
         return None
 
 
-def reduce(img: "ndarray", shrink_factor) -> "ndarray":
+def reduce_img(img: "ndarray", shrink_factor) -> "ndarray":
     if shrink_factor == 1:
         return img
     new_shape = (int(img.shape[1] / shrink_factor), int(img.shape[0] / shrink_factor))
@@ -99,12 +99,12 @@ if __name__ == "__main__":
 
         basename = os.path.split(mrc)[-1]
         if len(img.shape) == 2:
-            img = reduce(img, shrink_factor)
+            img = reduce_img(img, shrink_factor)
             outputname = f"{basename}.jpg"
             make_jpg_with_scalebar(img, pixel_size, args.outputdir, outputname)
         elif len(img.shape) == 3:
             for i in range(img.shape[0]):
                 outputname = f"{basename}_section{i}.jpg"
                 section = img[i]
-                section = reduce(section, shrink_factor)
+                section = reduce_img(section, shrink_factor)
                 make_jpg_with_scalebar(section, pixel_size, args.outputdir, outputname)
