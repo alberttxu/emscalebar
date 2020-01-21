@@ -103,7 +103,7 @@ def process_mrc(path_to_mrc):
             outputname = f"{basename}_section{i}.jpg"
             section = img[i]
             section = reduce_img(section, shrink_factor)
-            make_jpg_with_scalebar(section, pixel_size, outputdir, outputname)
+            make_jpg_with_scalebar(section, pixel_size, args.outputdir, outputname)
 
 
 if __name__ == "__main__":
