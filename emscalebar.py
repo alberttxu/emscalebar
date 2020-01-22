@@ -69,8 +69,14 @@ def make_jpg_with_scalebar(img, pixel_size, outputdir, outputname):
     img = img_as_ubyte(img)
 
     plt.figure()
-    scalebar = ScaleBar(pixel_size, location="lower right", color="blue", frameon=False)
+    scalebar = ScaleBar(
+        pixel_size, location="lower right", frameon=True, color="black", pad=0.3, box_alpha=0, border_pad=0.3, height_fraction=0.009
+    )
+    scalebar2 = ScaleBar(
+        pixel_size, location="lower right", frameon=True, color="white", box_alpha=0, border_pad=0.3, height_fraction=0.005
+    )
     plt.gca().add_artist(scalebar)
+    plt.gca().add_artist(scalebar2)
     plt.imshow(img, cmap="gray")
     plt.axis("off")
     temp_img = tempfile.TemporaryFile()
@@ -93,14 +99,14 @@ def process_mrc(path_to_mrc):
     else:
         shrink_factor = 1
 
-    basename = os.path.split(path_to_mrc)[-1]
+    filename = os.path.split(path_to_mrc)[-1]
     if len(img.shape) == 2:
         img = reduce_img(img, shrink_factor)
-        outputname = f"{basename}.jpg"
+        outputname = f"{filename}.jpg"
         make_jpg_with_scalebar(img, pixel_size, args.outputdir, outputname)
     elif len(img.shape) == 3:
         for i in range(img.shape[0]):
-            outputname = f"{basename}_section{i}.jpg"
+            outputname = f"{filename}_section{i}.jpg"
             section = img[i]
             section = reduce_img(section, shrink_factor)
             make_jpg_with_scalebar(section, pixel_size, args.outputdir, outputname)
