@@ -70,10 +70,23 @@ def make_jpg_with_scalebar(img, pixel_size, outputdir, outputname):
 
     plt.figure()
     scalebar = ScaleBar(
-        pixel_size, location="lower right", frameon=True, color="black", pad=0.3, box_alpha=0, border_pad=0.3, height_fraction=0.009
+        pixel_size,
+        location="lower right",
+        frameon=True,
+        color="black",
+        pad=0.3,
+        box_alpha=0,
+        border_pad=0.3,
+        height_fraction=0.009,
     )
     scalebar2 = ScaleBar(
-        pixel_size, location="lower right", frameon=True, color="white", box_alpha=0, border_pad=0.3, height_fraction=0.005
+        pixel_size,
+        location="lower right",
+        frameon=True,
+        color="white",
+        box_alpha=0,
+        border_pad=0.3,
+        height_fraction=0.005,
     )
     plt.gca().add_artist(scalebar)
     plt.gca().add_artist(scalebar2)
